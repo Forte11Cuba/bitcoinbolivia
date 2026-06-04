@@ -1,0 +1,402 @@
+/* ════════════════════════════════════════════════════════════════
+   enhance.css — capa de rediseño sobre style.css
+   Mejoras: tipografía display, hero legible, parity band señorial,
+   iconos consistentes, micro-interacciones. Marca intacta (naranja BTC).
+   ════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --green: #2ec27e;          /* guiño bandera / "meta" paridad, uso puntual */
+  --green-dim: rgba(46, 194, 126, 0.12);
+  --bg-glass: rgba(14, 14, 14, 0.92);
+}
+
+/* ─── TIPOGRAFÍA DISPLAY EN TITULARES ─────────────────────── */
+.hero-title,
+.section-title,
+.page-title,
+.stat-num,
+.parity-big,
+.tool-text h3 {
+  font-family: var(--display);
+  letter-spacing: -0.02em;
+}
+
+.hero-title { letter-spacing: -0.035em; }
+
+/* ─── HERO: legibilidad + estructura 2 columnas ───────────── */
+.hero { min-height: 92vh; position: relative; }
+
+/* capa de oscurecido PERMANENTE (div real, no se desvanece con el crossfade) */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg,
+      rgba(7,7,7,0.80) 0%,
+      rgba(7,7,7,0.58) 34%,
+      rgba(7,7,7,0.22) 64%,
+      rgba(7,7,7,0.08) 100%),
+    linear-gradient(0deg,
+      rgba(7,7,7,0.42) 0%,
+      rgba(7,7,7,0) 30%);
+}
+
+/* ─── LOGO WORDMARK (₿olivia.org · swash tricolor) ────────── */
+.wm {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: flex-end;
+  color: #fff;
+  white-space: nowrap;
+  text-decoration: none !important;
+}
+.wm .word-stack { display: inline-flex; flex-direction: column; align-items: stretch; }
+.wm .word { display: inline-block; color: inherit; }
+/* la "B" de Bitcoin: letra B + dos columnas de astas = ₿ */
+.wm .bm {
+  position: relative;
+  color: var(--orange);
+  display: inline-block;
+  padding: 0 0.02em;
+}
+.wm .bm::before, .wm .bm::after {
+  content: '';
+  position: absolute;
+  left: 0.205em;
+  width: 0.072em;
+  height: 0.215em;
+  background: currentColor;
+  border-radius: 0.5px;
+  box-shadow: 0.138em 0 0 currentColor;
+}
+.wm .bm::before { top: -0.10em; }
+.wm .bm::after  { bottom: -0.10em; }
+.wm .org {
+  font-size: 0.30em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #8c8c8c;
+  margin-left: 0.14em;
+  margin-bottom: 0.30em;
+}
+/* swash tricolor Bolivia bajo el wordmark */
+.wm .flag-underline {
+  height: 0.085em;
+  min-height: 3px;
+  width: 100%;
+  margin-top: 0.09em;
+  border-radius: 3px;
+  background: linear-gradient(90deg,#DA291C 0 33.33%,#F4D000 33.33% 66.66%,#007A33 66.66% 100%);
+}
+.nav-wm    { font-size: 30px; }
+.footer-wm { font-size: 26px; margin-bottom: 1rem; }
+@media (max-width: 480px) { .nav-wm { font-size: 25px; } }
+
+/* ─── ICONOS SVG (reemplazan emoji en páginas internas) ───── */
+.ic {
+  width: 1em; height: 1em;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.14em;
+  display: inline-block;
+}
+/* card-icon → placa de marca (igual que la home) */
+.card-icon {
+  width: 52px; height: 52px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 13px;
+  background: var(--orange-dim);
+  border: 1px solid var(--orange-border);
+  margin-bottom: 0.95rem;
+  font-size: 0;
+}
+.card-icon .ic { width: 25px; height: 25px; }
+/* iconos dentro de placeholder-visual */
+.placeholder-visual .ph-icon { font-size: 2.6rem; line-height: 1; }
+.placeholder-visual .ph-icon .ic { width: 1em; height: 1em; }
+
+/* veladura suave por slide (deja ver las fotos; el texto lo cubre .hero-scrim) */
+.hero-slide::after {
+  background:
+    linear-gradient(110deg,
+      rgba(8,8,8,0.55) 0%,
+      rgba(8,8,8,0.40) 45%,
+      rgba(8,8,8,0.16) 100%);
+}
+
+/* leve zoom lento para dar vida a las fotos */
+.hero-slide {
+  background-position: center 35%;
+  animation: heroFade 18s infinite, heroZoom 18s infinite ease-out;
+}
+@keyframes heroZoom {
+  0%, 27% { transform: scale(1.06); }
+  100%    { transform: scale(1); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+/* anula el margen heredado del .hero-content viejo */
+.hero .hero-inner .hero-content {
+  max-width: 880px;
+  padding: 0;
+  margin: 0;
+}
+/* sombra sutil para mantener legible el texto sobre fondo más claro */
+.hero-content .hero-title,
+.hero-content .hero-sub {
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.hero-badge-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--orange-dim);
+  border: 1px solid var(--orange-border);
+  color: var(--orange);
+  padding: 0.35rem 0.9rem 0.35rem 0.55rem;
+  border-radius: 30px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero-badge-row .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(46,194,126,0.6);
+  animation: pulse 2.2s infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(46,194,126,0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(46,194,126,0); }
+  100% { box-shadow: 0 0 0 0 rgba(46,194,126,0); }
+}
+
+.hero-title { font-size: clamp(2.1rem, 4.2vw, 3.4rem); margin-bottom: 1.25rem; }
+.hero-sub   { font-size: 1rem; color: #c8c8c8; max-width: 480px; }
+
+/* fila inferior: paridad (izq) + estadísticas (der) en una sola línea */
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  margin-top: 1.9rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--border);
+}
+.hero-bottom .hero-stats {
+  gap: 1.6rem;
+  padding-top: 0;
+  border-top: none;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.hero-stats .stat { display: flex; flex-direction: column; }
+.stat-num   { font-size: 1.45rem; }
+.hero-stats .stat-label { font-size: 0.6rem; }
+
+/* ─── PARIDAD · línea compacta (izquierda de la fila) ─────── */
+.parity-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0;
+  flex: 0 0 auto;
+}
+.parity-strip .ps-coin {
+  width: 114px; height: 114px; object-fit: contain; flex-shrink: 0;
+  filter: drop-shadow(0 5px 16px rgba(242,88,38,0.32));
+}
+.parity-strip .ps-body { flex: 0 0 auto; width: 180px; }
+.parity-strip .ps-top {
+  display: flex; flex-direction: column; gap: 0.12rem;
+  margin-bottom: 0.5rem;
+}
+.parity-strip .ps-num {
+  font-family: var(--display); font-weight: 700; font-size: 1rem;
+  color: #fff; white-space: nowrap; text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+}
+.parity-strip .ps-num .val { color: var(--orange); }
+.parity-strip .ps-meta {
+  font-size: 0.66rem; color: rgba(255,255,255,0.62); line-height: 1.4;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+}
+.parity-strip .parity-track { height: 5px; }
+
+@media (max-width: 880px) {
+  .hero-bottom { flex-wrap: wrap; gap: 1.6rem; }
+}
+
+/* ─── PARITY SIGNATURE CARD (columna derecha del hero) ─────── */
+.parity-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(22px) saturate(0.6);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.6);
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.parity-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.95rem;
+}
+.parity-coin {
+  width: 44px; height: 44px; object-fit: contain;
+  filter: drop-shadow(0 4px 14px rgba(242,88,38,0.35));
+  flex-shrink: 0;
+}
+.parity-kicker {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.parity-goal-label {
+  font-family: var(--display);
+  font-size: 0.9rem; font-weight: 600; color: #fff; line-height: 1.25;
+}
+.parity-goal-label b { color: var(--orange); }
+
+.parity-big {
+  font-size: 1.9rem; font-weight: 700; color: #fff;
+  line-height: 1; margin-bottom: 0.2rem;
+}
+.parity-big .val { color: var(--orange); }
+.parity-unit { font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0; }
+.parity-sub {
+  font-size: 0.74rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5;
+}
+
+/* barra de progreso hacia 1 SAT = 1 BOB */
+.parity-track {
+  position: relative;
+  height: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.parity-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  transform: scaleX(0.02);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--orange), #ffb070);
+  border-radius: 20px;
+  transition: transform 1.4s cubic-bezier(0.22,1,0.36,1);
+}
+.parity-scale {
+  display: flex; justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.66rem; color: var(--text-muted);
+}
+.parity-scale .goal { color: var(--green); font-weight: 600; }
+.parity-pct {
+  margin-top: 0.7rem;
+  font-size: 0.72rem; color: var(--text-muted); line-height: 1.5;
+}
+.parity-pct b { color: var(--orange); font-weight: 700; }
+
+/* ─── ICON TILES (reemplazan emoji) ───────────────────────── */
+.icon-tile {
+  width: 52px; height: 52px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 13px;
+  background: var(--orange-dim);
+  border: 1px solid var(--orange-border);
+  margin-bottom: 0.95rem;
+}
+.icon-tile svg {
+  width: 24px; height: 24px;
+  stroke: var(--orange); stroke-width: 1.7;
+  fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* alinear logos dentro de un tile neutro para consistencia visual */
+.logo-tile {
+  width: 52px; height: 52px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 13px;
+  background: #fff;
+  margin-bottom: 0.95rem;
+  padding: 8px;
+}
+.logo-tile img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* card un poco más viva */
+.card { border-radius: 14px; }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+}
+
+/* ─── SECTION EYEBROW con linea ───────────────────────────── */
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.section-eyebrow::before {
+  content: ''; width: 22px; height: 2px;
+  background: var(--orange); border-radius: 2px;
+}
+
+/* ─── SCROLL REVEAL ───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform;
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-slide { animation: heroFade 18s infinite; }
+}
+
+/* ─── PARIDAD BAND inferior (mini ticker honesto) ─────────── */
+.parity-band {
+  background: linear-gradient(135deg, #160d04 0%, #141414 60%);
+  border-top: 1px solid var(--orange-border);
+  border-bottom: 1px solid var(--orange-border);
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+    padding: 3rem 1.5rem 3.5rem;
+  }
+  .parity-card { max-width: 460px; }
+  .hero-stats { gap: 2rem; }
+}

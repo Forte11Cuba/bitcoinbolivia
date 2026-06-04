@@ -1,0 +1,22 @@
+{
+  "name": "Bolivia.ORG — Bitcoin en Bolivia",
+  "short_name": "Bolivia.ORG",
+  "description": "La comunidad Bitcoin de Bolivia. Educación, adopción y economía circular con Bitcoin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#F25826",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/assets/img/logos/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
