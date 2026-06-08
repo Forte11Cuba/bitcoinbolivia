@@ -23,6 +23,17 @@ document.querySelectorAll('.has-dropdown > a').forEach(link => {
   });
 });
 
+// Mobile sub-dropdown toggles (Adquiere Bitcoin → lnp2pbot/Mostro)
+document.querySelectorAll('.has-subdropdown > a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (window.innerWidth <= 900) {
+      e.preventDefault();
+      e.stopPropagation();
+      link.parentElement.classList.toggle('open');
+    }
+  });
+});
+
 // Active nav link
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 document.querySelectorAll('.nav-links > li > a').forEach(link => {
