@@ -1,0 +1,29 @@
+services:
+  bitcoinbolivia:
+    build: .
+    container_name: bitcoinbolivia_web
+    restart: unless-stopped
+    networks:
+      - npm_network
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx_proxy_manager
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"   # panel de administración NPM
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - npm_network
+
+volumes:
+  npm_data:
+  npm_letsencrypt:
+
+networks:
+  npm_network:
+    driver: bridge

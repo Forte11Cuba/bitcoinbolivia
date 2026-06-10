@@ -1,0 +1,6 @@
+.git
+*.md
+design-canvas.jsx
+Dockerfile
+docker-compose.yml
+.dockerignore
