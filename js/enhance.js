@@ -131,3 +131,35 @@
   tick();
   setInterval(tick, 30_000); // poll cada 30s
 })();
+
+/* ─── CARRUSELES POR DEPARTAMENTO ─────────────────────────── */
+(function () {
+  document.querySelectorAll('.depto-carousel').forEach(function (carousel) {
+    const track = carousel.querySelector('.depto-track');
+    const imgs = track.querySelectorAll('img');
+    const total = imgs.length;
+    if (total <= 1) { carousel.setAttribute('data-single', 'true'); return; }
+
+    let idx = 0;
+
+    // dots
+    const dotsEl = carousel.querySelector('.depto-dots');
+    const dots = Array.from({ length: total }, function (_, i) {
+      const d = document.createElement('button');
+      d.className = 'depto-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Foto ' + (i + 1));
+      d.addEventListener('click', function () { go(i); });
+      dotsEl.appendChild(d);
+      return d;
+    });
+
+    function go(n) {
+      idx = (n + total) % total;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+    }
+
+    carousel.querySelector('.depto-prev').addEventListener('click', function () { go(idx - 1); });
+    carousel.querySelector('.depto-next').addEventListener('click', function () { go(idx + 1); });
+  });
+})();

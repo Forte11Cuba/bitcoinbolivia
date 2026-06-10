@@ -162,10 +162,10 @@
 /* leve zoom lento para dar vida a las fotos */
 .hero-slide {
   background-position: center 35%;
-  animation: heroFade 18s infinite, heroZoom 18s infinite ease-out;
+  animation: heroFade 24s infinite, heroZoom 24s infinite ease-out;
 }
 @keyframes heroZoom {
-  0%, 27% { transform: scale(1.06); }
+  0%, 20% { transform: scale(1.06); }
   100%    { transform: scale(1); }
 }
 
@@ -1584,7 +1584,7 @@ a.roadmap-name:hover { color: var(--orange); }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .hero-slide { animation: heroFade 18s infinite; }
+  .hero-slide { animation: heroFade 24s infinite; }
 }
 
 /* ─── PARIDAD BAND inferior (mini ticker honesto) ─────────── */
@@ -1604,3 +1604,93 @@ a.roadmap-name:hover { color: var(--orange); }
   .parity-card { max-width: 460px; }
   .hero-stats { gap: 2rem; }
 }
+
+/* ─── CARRUSEL POR DEPARTAMENTO ───────────────────────────── */
+.depto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.depto-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.depto-label {
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.4rem 1rem;
+}
+
+.depto-carousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.depto-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+.depto-track img {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.depto-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.depto-arrow:hover { background: var(--orange); }
+.depto-prev { left: 0.4rem; }
+.depto-next { right: 0.4rem; }
+
+.depto-dots {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.35rem;
+}
+.depto-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.depto-dot.active { background: var(--orange); }
+
+/* Ocultar flechas si solo hay 1 foto */
+.depto-carousel[data-single="true"] .depto-arrow { display: none; }
